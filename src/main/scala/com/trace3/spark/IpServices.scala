@@ -20,9 +20,10 @@ object IpServices {
 
   val usage : String =
     """
-      |Usage: ProtoServices [servicesfile] <db.tableName>
-      |  eg. file:///etc/services
-      |  tableName is optional, default table is 'default.ipservices'
+      |Usage: IpServices [servicesfile] <db.tableName>
+      |  eg.  file:///etc/services
+      |  tableName is optional
+      |  default table is 'default.ipservices'
     """.stripMargin
 
 

@@ -3,7 +3,7 @@
 import scala.io.Source
 
 
-case class Service(
+case class Service (
   name: String,
   port: Integer,
   proto: String,
