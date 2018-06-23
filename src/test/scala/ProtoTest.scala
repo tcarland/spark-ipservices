@@ -22,10 +22,10 @@ object ProtoTest {
       val lines = Source.fromFile(file).getLines()
       var svcs  = Seq.empty[Service]
 
-      val p1  = """([^#]\S+)\t+(\d+)\/(\S+)""".r                    // 2 columns
-      val p2  = """([^#]\S+)\t+(\d+)\/(\S+)\t+([^#]\S+)""".r        // 3 columns, no comment
-      val p3  = """([^#]\S+)\t+(\d+)\/(\S+)\t+#\s(.+)""".r          // 3 columns w/ coment
-      val p4  = """([^#]\S+)\t+(\d+)\/(\S+)\t+(\S+)\t+#\s(.*)""".r  // 4 columns
+      val p1  = """([^#]\S+)\s+(\d+)\/(\S+)""".r                    // 2 columns
+      val p2  = """([^#]\S+)\s+(\d+)\/(\S+)\s+([^#]\S+)""".r        // 3 columns, no comment
+      val p3  = """([^#]\S+)\s+(\d+)\/(\S+)\s+#\s(.+)""".r          // 3 columns w/ coment
+      val p4  = """([^#]\S+)\s+(\d+)\/(\S+)\s+(\S+)\t+#\s(.*)""".r  // 4 columns
 
       for (line <- lines) {
         val svc: Service = line match {
