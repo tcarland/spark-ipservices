@@ -11,7 +11,8 @@ r=$?
 if [ $r -eq 0 ]; then
     ( scala -cp target $SCALA_CLASS $@ )
     r=$?
+else
+    echo "Error in compile"
 fi
 
 exit $r
-
