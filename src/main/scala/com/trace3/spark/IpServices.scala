@@ -57,7 +57,15 @@ object IpServices {
     val svcdf = spark.sparkContext
       .textFile(args(0))
       .map( line => {
-
+        val service: Service = line match {
+          case p1(svc, po, pr)       => Service(svc, po.toInt, pr, s"", s"")
+          case p2(svc, po, pr, a)    => Service(svc, po.toInt, pr, a, s"")
+          case p3(svc, po, pr, r)    => Service(svc, po.toInt, pr, s"", r)
+          case p4(svc, po, pr, a, r) => Service(svc, po.toInt, pr, a, r)
+          case _  => Service("", 0, "", "", "")
+        }
+        service
+      })
       .filter(svc => svc.port > 0)
       .toDS()
 
