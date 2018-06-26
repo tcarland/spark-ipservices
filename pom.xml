@@ -24,7 +24,7 @@
     <hbase.version>1.2.0</hbase.version>
     <scala.version>2.11.8</scala.version>
     <scala.tools.version>2.11</scala.tools.version>
-    <spark.version>2.2.0</spark.version>
+    <spark.version>2.3.0</spark.version>
   </properties>
   
   <dependencies>
