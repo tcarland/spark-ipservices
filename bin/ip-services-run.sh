@@ -10,7 +10,7 @@
 #  --jars $KAFKA_JAR \
 #
 
-SERVICES_JAR="ip-services-0.1.3-jar-with-dependencies.jar"
+SERVICES_JAR="ip-services-0.1.4-jar-with-dependencies.jar"
 
 spark-submit --master yarn \
 --num-executors 4 \

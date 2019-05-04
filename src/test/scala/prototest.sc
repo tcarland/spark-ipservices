@@ -18,7 +18,6 @@ val file = "file:///etc/ipservices"
 
     import spark.implicits._
 
-
     val p1  = """([^#]\S+)\s+(\d+)\/(\S+)""".r
     val p2  = """([^#]\S+)\s+(\d+)\/(\S+)\s+([^#]\S+)""".r
     val p3  = """([^#]\S+)\s+(\d+)\/(\S+)\s+#\s(.+)""".r
