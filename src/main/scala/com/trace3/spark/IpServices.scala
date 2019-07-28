@@ -23,7 +23,7 @@ object IpServices {
       |Usage: IpServices [servicesfile] <db.tableName>
       |  eg.  file:///etc/services
       |  tableName is optional
-      |  default table is 'default.ipservices'
+      |  default target is 'default.ipservices'
     """.stripMargin
 
 
