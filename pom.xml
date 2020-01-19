@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.trace3.spark</groupId>
   <artifactId>ip-services</artifactId>
-  <version>0.1.5</version>
+  <version>0.1.6</version>
   <packaging>jar</packaging>
   <description>IP Services</description>
 
@@ -24,7 +24,7 @@
     <hbase.version>1.3.3</hbase.version>
     <scala.version>2.12.8</scala.version>
     <scala.tools.version>2.12</scala.tools.version>
-    <spark.version>2.4.3</spark.version>
+    <spark.version>2.4.4</spark.version>
   </properties>
 
   <dependencies>
