@@ -43,5 +43,5 @@ val file = "s3a://testbucket/services"
       .toDS()
 
     //svcdf.write.format("parquet").mode(SaveMode.Overwrite).saveAsTable(table)
-    svcdf.write.parquet("s3a://testbucket/ipservices2").mode(SaveMode.Overwrite)
+    svcdf.write.parquet("s3a://testbucket/ipservices")
     println("Finished.")
