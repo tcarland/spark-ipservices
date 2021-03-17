@@ -13,7 +13,8 @@ case class Service(
 
 
 val table = "default.ipservices"
-val file = "file:///etc/ipservices"
+//val file = "file:///etc/ipservices"
+val file = "s3a://testbucket/services"
 
 
     import spark.implicits._
@@ -23,9 +24,11 @@ val file = "file:///etc/ipservices"
     val p3  = """([^#]\S+)\s+(\d+)\/(\S+)\s+#\s(.+)""".r
     val p4  = """([^#]\S+)\s+(\d+)\/(\S+)\s+(\S+)\t+#\s(.*)""".r
 
+
 :paste
+
     val svcdf = spark.sparkContext
-      .textFile("file:///etc/services")
+      .textFile(file)
       .map( line => {
         val service: Service = line match {
           case p1(svc, po, pr)       => Service(svc, po.toInt, pr, s"", s"")
@@ -39,5 +42,6 @@ val file = "file:///etc/ipservices"
       .filter(svc => svc.port > 0)
       .toDS()
 
-    svcdf.write.format("parquet").mode(SaveMode.Overwrite).saveAsTable(table)
+    //svcdf.write.format("parquet").mode(SaveMode.Overwrite).saveAsTable(table)
+    svcdf.write.parquet("s3a://testbucket/ipservices2").mode(SaveMode.Overwrite)
     println("Finished.")
