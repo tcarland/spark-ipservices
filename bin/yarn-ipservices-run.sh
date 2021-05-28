@@ -2,11 +2,12 @@
 #
 #  ip-services-run.sh
 #
+cwd=$(dirname "$(readlink -f "$0")")
+. $cwd/ipservices-config.sh
 
-APP_JAR="ip-services-0.3.2-jar-with-dependencies.jar"
 APP_CLASS="com.trace3.spark.IpServices"
 
 spark-submit --master yarn \
-  --class com.trace3.spark.IpServices \
-  target/$SERVICES_JAR \
+  --class $IPSERVICES_CLASS \
+  iptarget/$SERVICES_JAR \
   $@
