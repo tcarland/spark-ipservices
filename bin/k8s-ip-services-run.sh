@@ -16,5 +16,11 @@ if [ $? -ne 0 ]; then
 fi
 
 
+if ! sparkonk8s.sh -e >/dev/null; then
+    echo "Error with spark run configuration"
+    exit 1
+fi
+
 sparkonk8s.sh ipservices $IPSERVICES_CLASS $JAR_PATH/$IPSERVICES_JAR $@ 
 
+exit $?
