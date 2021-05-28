@@ -16,35 +16,27 @@ case class Service(
 
 object IpServices {
 
-  var dbName = "ipservices"
 
   val usage : String =
     """
-      |Usage: IpServices [servicesfile] <db.tableName>
-      |  eg.  file:///etc/services
-      |  tableName is optional
-      |  default target is 'default.ipservices'
+      |Usage: IpServices [input_services_file] [output_path]
+      |  eg.  s3a:///bucket/etc-services s3a:///bucket/ipservices
     """.stripMargin
 
 
   def main ( args: Array[String] ) : Unit = {
 
-    if ( args.size < 1 ) {
+    if ( args.size < 2 ) {
       println(usage)
       System.exit(0)
     }
 
-    if ( args.size == 2 )
-      dbName = args(1)
+    val output = args(1)
 
     val spark = SparkSession
       .builder
       .appName("IpServices")
-      .enableHiveSupport()
       .config("spark.sql.parquet.compression.codec", "snappy")
-      .config("spark.sql.hive.convertMetastoreParquet", "false")
-      .config("hive.exec.dynamic.partition", "true")
-      .config("hive.exec.dynamic.partition.mode", "nonstrict")
       .getOrCreate()
 
     import spark.implicits._
@@ -69,7 +61,7 @@ object IpServices {
       .filter(svc => svc.port > 0)
       .toDS()
 
-    svcdf.write.format("parquet").mode(SaveMode.Overwrite).saveAsTable(dbName)
+    svcdf.write.mode(SaveMode.Overwrite).parquet(output)
     println("Finished.")
 
     spark.stop
