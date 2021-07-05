@@ -20,10 +20,9 @@ object IpServicesTable {
 
   val usage : String =
     """
-      |Usage: IpServices [servicesfile] <db.tableName>
+      |Usage: IpServicesTable [servicesfile] <db.tableName>
       |  eg.  file:///etc/services or s3a://scratch/ipservices
-      |  tableName is optional
-      |  default target is 'default.ipservices'
+      |  tableName is optional, default is 'default.ipservices'
     """.stripMargin
 
 
@@ -69,7 +68,11 @@ object IpServicesTable {
       .filter(svc => svc.port > 0)
       .toDS()
 
-    svcdf.write.format("parquet").mode(SaveMode.Overwrite).saveAsTable(dbName)
+    spark.sql("CREATE TABLE IF NOT EXISTS " + dbName + 
+      " (name STRING, port BIGINT, proto STRING, aliases STRING, comment STRING)" +
+      " STORED AS parquet")
+
+    svcdf.write.format("parquet").mode(SaveMode.Overwrite).insertInto(dbName)
     println("Finished.")
 
     spark.stop

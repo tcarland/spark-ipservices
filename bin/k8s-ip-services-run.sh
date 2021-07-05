@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #
-# sparkonk8s.sh -m 2g -w 4 IpServices com.trace3.spark.IpServices s3a://spark/jars/ip-services-0.3.2-jar-with-dependencies.jar s3a://scratch/services s3a://spark/ipservices
+# sparkonk8s.sh -m 2g -w 4 ipservices com.trace3.spark.IpServices s3a://spark/jars/ip-services-0.3.4-jar-with-dependencies.jar s3a://scratch/services s3a://spark/ipservices
 #
 MC="${MC:-callisto}"
-JAR_PATH="s3a://spark/jars"
-
 
 cwd=$(dirname "$(readlink -f "$0")")
 . $cwd/ipservices-config.sh
 
+jar_path="s3a://spark/jars"
+app_class="com.trace3.spark.IpServicesTable"
 
 ( mc cp target/$IPSERVICES_JAR $MC/spark/jars/ )
 
@@ -23,6 +23,6 @@ if ! sparkonk8s.sh -e >/dev/null; then
     exit 1
 fi
 
-sparkonk8s.sh ipservices $IPSERVICES_CLASS $JAR_PATH/$IPSERVICES_JAR $@ 
+sparkonk8s.sh -H trino ipservices $app_class $jar_path/$IPSERVICES_JAR $@ 
 
 exit $?

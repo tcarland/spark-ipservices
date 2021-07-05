@@ -9,5 +9,5 @@ APP_CLASS="com.trace3.spark.IpServices"
 
 spark-submit --master yarn \
   --class $IPSERVICES_CLASS \
-  iptarget/$SERVICES_JAR \
+  target/$IPSERVICES_JAR \
   $@
