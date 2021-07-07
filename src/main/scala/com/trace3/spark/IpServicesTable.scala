@@ -40,11 +40,11 @@ object IpServicesTable {
       .builder
       .appName("IpServicesTable")
       .enableHiveSupport()
-      .config("spark.sql.parquet.compression.codec", "snappy")
-      .config("spark.sql.hive.convertMetastoreParquet", "false")
-      .config("hive.exec.dynamic.partition", "true")
-      .config("hive.exec.dynamic.partition.mode", "nonstrict")
       .getOrCreate()
+      //.config("spark.sql.parquet.compression.codec", "snappy")
+      //.config("spark.sql.hive.convertMetastoreParquet", "false")
+      //.config("hive.exec.dynamic.partition", "true")
+      //.config("hive.exec.dynamic.partition.mode", "nonstrict")
 
     import spark.implicits._
 

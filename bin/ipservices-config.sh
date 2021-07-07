@@ -1,6 +1,6 @@
 # defaults for launching ipservices 
 
-export IPSERVICES_VERSION="0.3.4"
+export IPSERVICES_VERSION="0.3.5"
 export SPARK_VERSION="3.1.2"
 
 

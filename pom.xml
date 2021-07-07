@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.trace3.spark</groupId>
   <artifactId>ip-services</artifactId>
-  <version>0.3.4</version>
+  <version>0.3.5</version>
   <packaging>jar</packaging>
   <description>IP Services</description>
 
