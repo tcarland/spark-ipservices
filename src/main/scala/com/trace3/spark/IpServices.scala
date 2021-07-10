@@ -5,7 +5,7 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql._
 
 
-case class Service(
+case class Service (
   name:     String,
   port:     Integer,
   proto:    String,
@@ -20,7 +20,7 @@ object IpServices {
   val usage : String =
     """
       |Usage: IpServices [input_services_file] [output_path]
-      |  eg.  s3a:///bucket/etc-services s3a:///bucket/ipservices
+      |  eg.  s3a://bucket/services s3a://bucket/ipservices
     """.stripMargin
 
 
