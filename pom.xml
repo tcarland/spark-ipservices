@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.trace3.spark</groupId>
   <artifactId>ip-services</artifactId>
-  <version>0.3.5</version>
+  <version>0.3.9</version>
   <packaging>jar</packaging>
   <description>IP Services</description>
 
@@ -19,9 +19,9 @@
 
   <properties>
     <encoding>UTF-8</encoding>
-    <scala.version>2.12.12</scala.version>
-    <scala.tools.version>2.12</scala.tools.version>
-    <spark.version>3.1.2</spark.version>
+    <scala.version>2.11.12</scala.version>
+    <scala.tools.version>2.11</scala.tools.version>
+    <spark.version>2.4.7</spark.version>
   </properties>
 
   <dependencies>
@@ -39,6 +39,34 @@
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-sql_${scala.tools.version}</artifactId>
       <version>${spark.version}</version>
+    </dependency>
+    <!-- jackson related dependencies of delta -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.6.7</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.6.7.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.6.7</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.module</groupId>
+      <artifactId>jackson-module-scala_2.11</artifactId>
+      <version>2.6.7.1</version>
+    </dependency>
+    <!-- delta -->
+    <!-- https://mvnrepository.com/artifact/io.delta/delta-core -->
+    <dependency>
+      <groupId>io.delta</groupId>
+      <artifactId>delta-core_2.11</artifactId>
+      <version>0.6.1</version>
     </dependency>
   </dependencies>
 
@@ -88,6 +116,73 @@
             </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <finalName>${project.artifactId}-${project.version}-jackson-shaded</finalName>
+              <filters> <!-- exclude these files from artifacts to avoid SecurityException on signed jars -->
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/LICENSE</exclude>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+
+			  <transformers>
+				<transformer
+					implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+					<resource>META-INF/DEPENDENCIES</resource>
+				</transformer>
+				<transformer
+					implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+					<resource>META-INF/maven/</resource>
+				</transformer>
+				<transformer
+                    implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                    <resource>META-INF/services/</resource>
+                </transformer>
+                <transformer 
+                    implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                    <resource> META-INF/services/org.apache.spark.sql.sources.DataSourceRegister
+                    </resource>
+                </transformer>
+				<transformer
+					implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+					<manifestEntries>
+						<Main-Class>com.trace3.deltalake.DeltaLakeOverride</Main-Class>
+						<Build-Number>1.0</Build-Number>
+					</manifestEntries>
+				</transformer>
+            </transformers>
+                                
+              <relocations> 
+                <relocation>
+                  <pattern>com.fasterxml.jackson</pattern>
+                  <shadedPattern>noc.com.fasterxml.jackson</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.google.guava</pattern>
+                  <shadedPattern>noc.com.google.guava</shadedPattern>
+                </relocation>
+              </relocations>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 

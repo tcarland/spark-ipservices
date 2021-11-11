@@ -1,9 +1,9 @@
 package com.trace3.spark
 
-
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql._
 
+import io.delta.tables._
 
 case class Service (
   name:     String,
@@ -61,7 +61,9 @@ object IpServices {
       .filter(svc => svc.port > 0)
       .toDS()
 
-    svcdf.write.mode(SaveMode.Overwrite).parquet(output)
+    //svcdf.write.mode(SaveMode.Overwrite).parquet(output)
+    svcdf.write.format("delta").save(output)
+    
     println("Finished.")
 
     spark.stop
