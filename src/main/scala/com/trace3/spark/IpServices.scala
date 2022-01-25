@@ -26,7 +26,7 @@ object IpServices {
 
   def main ( args: Array[String] ) : Unit = {
 
-    if ( args.size < 2 ) {
+    if ( args.length < 2 ) {
       println(usage)
       System.exit(0)
     }
@@ -62,7 +62,7 @@ object IpServices {
       .toDS()
 
     svcdf.write.mode(SaveMode.Overwrite).parquet(output)
-    println("Finished.")
+    println("IpServices finished.")
 
     spark.stop
   }
