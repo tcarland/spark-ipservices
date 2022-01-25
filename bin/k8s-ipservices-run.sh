@@ -11,18 +11,24 @@ cwd=$(dirname "$(readlink -f "$0")")
 jar_path="s3a://spark/jars"
 app_class="com.trace3.spark.IpServicesTable"
 
+if [ -z "$MC" ]; then 
+    echo "Error, no MinIO Alias configured"
+    exit 1
+fi
+
 # copy jar
 jar=$(mc ls $MC/spark/jars/$IPSERVICES_JAR 2>/dev/null)
 if [ -z "$jar" ]; then
     ( mc cp target/$IPSERVICES_JAR $MC/spark/jars/ )
 fi 
+
 if [ $? -ne 0 ]; then
     echo "Error in `mc cp`"
     exit 1
 fi
 
 if ! sparkonk8s.sh -e >/dev/null; then
-    echo "Error with the spark run configuration."
+    echo "Error with the spark runtime configuration."
     exit 1
 fi
 

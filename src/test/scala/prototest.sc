@@ -14,16 +14,15 @@ case class Service(
 
 val table = "default.ipservices"
 val file = "s3a://scratch/ipservices"
-//val file = "file:///etc/ipservices"
+//val file = "file:///etc/services"
 
 
-  import spark.implicits._
+import spark.implicits._
 
-  val p1  = """([^#]\S+)\s+(\d+)\/(\S+)""".r
-  val p2  = """([^#]\S+)\s+(\d+)\/(\S+)\s+([^#]\S+)""".r
-  val p3  = """([^#]\S+)\s+(\d+)\/(\S+)\s+#\s(.+)""".r
-  val p4  = """([^#]\S+)\s+(\d+)\/(\S+)\s+(\S+)\t+#\s(.*)""".r
-
+val p1  = """([^#]\S+)\s+(\d+)\/(\S+)""".r
+val p2  = """([^#]\S+)\s+(\d+)\/(\S+)\s+([^#]\S+)""".r
+val p3  = """([^#]\S+)\s+(\d+)\/(\S+)\s+#\s(.+)""".r
+val p4  = """([^#]\S+)\s+(\d+)\/(\S+)\s+(\S+)\t+#\s(.*)""".r
 
 :paste
 
@@ -43,5 +42,6 @@ val file = "s3a://scratch/ipservices"
       .toDS()
 
     //svcdf.write.format("parquet").mode(SaveMode.Overwrite).saveAsTable(table)
+
     svcdf.write.parquet("s3a://scratch/ipservices")
     println("Finished.")
