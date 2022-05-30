@@ -37,7 +37,7 @@ object IpServicesTable {
       dbName = args(1)
 
     val spark = SparkSession
-      .builder
+      .builder()
       .appName("IpServicesTable")
       .enableHiveSupport()
       .getOrCreate()
@@ -75,7 +75,7 @@ object IpServicesTable {
     svcdf.write.format("parquet").mode(SaveMode.Overwrite).insertInto(dbName)
     println("Finished.")
 
-    spark.stop
+    spark.stop()
   }
 
 }

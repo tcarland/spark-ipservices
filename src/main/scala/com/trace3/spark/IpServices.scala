@@ -34,7 +34,7 @@ object IpServices {
     val output = args(1)
 
     val spark = SparkSession
-      .builder
+      .builder()
       .appName("IpServices")
       .config("spark.sql.parquet.compression.codec", "snappy")
       .getOrCreate()
@@ -66,7 +66,7 @@ object IpServices {
     
     println("IpServices finished.")
 
-    spark.stop
+    spark.stop()
   }
 
 }
