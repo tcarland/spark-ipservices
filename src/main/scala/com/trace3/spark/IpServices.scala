@@ -14,12 +14,11 @@ case class Service (
 )
 
 
-object IpServices {
-
+object IpServiceNames {
 
   val usage : String =
     """
-      |Usage: IpServices [input_services_file] [output_path]
+      |Usage: IpServiceNames [input_services_file] [output_path]
       |  eg.  s3a://bucket/services s3a://bucket/ipservices
     """.stripMargin
 
@@ -35,7 +34,7 @@ object IpServices {
 
     val spark = SparkSession
       .builder()
-      .appName("IpServices")
+      .appName("IpServiceNames")
       .config("spark.sql.parquet.compression.codec", "snappy")
       .getOrCreate()
 
@@ -62,7 +61,7 @@ object IpServices {
       .toDS()
 
     svcdf.write.mode(SaveMode.Overwrite).parquet(output)
-    println("IpServices finished.")
+    println("IpServiceNames finished.")
 
     spark.stop()
   }

@@ -11,7 +11,6 @@ case class Service(
   comment:  String
 )
 
-
 val table = "default.ipservices"
 val file = "s3a://scratch/ipservices"
 //val file = "file:///etc/ipservices"

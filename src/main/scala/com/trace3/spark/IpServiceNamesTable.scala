@@ -1,8 +1,8 @@
 package com.trace3.spark
 
-
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql._
+
 
 
 case class ServiceTable (
@@ -14,15 +14,15 @@ case class ServiceTable (
 )
 
 
-object IpServicesTable {
+object IpServiceNamesTable {
 
-  var dbName = "default.ipservices"
+  var dbName = "default.ipservicenames"
 
   val usage : String =
     """
-      |Usage: IpServicesTable [servicesfile] <db.tableName>
+      |Usage: IpServiceNamesTable [servicesfile] <db.tableName>
       |  eg.  file:///etc/services or s3a://scratch/ipservices
-      |  tableName is optional, default is 'default.ipservices'
+      |  tableName is optional, default is 'default.ipservicenames'
     """.stripMargin
 
 
@@ -38,7 +38,7 @@ object IpServicesTable {
 
     val spark = SparkSession
       .builder()
-      .appName("IpServicesTable")
+      .appName("IpServiceNamesTable")
       .enableHiveSupport()
       .getOrCreate()
       //.config("spark.sql.parquet.compression.codec", "snappy")

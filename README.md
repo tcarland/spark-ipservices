@@ -12,5 +12,3 @@ on all unix systems in '/etc/services'.
 fields are tab-delimited, with four (sparse) columns, with two 
 of the four columns being optional.
 
-
-
