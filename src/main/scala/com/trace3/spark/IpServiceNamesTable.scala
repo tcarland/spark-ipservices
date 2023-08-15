@@ -4,7 +4,6 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql._
 
 
-
 case class ServiceTable (
   name:     String,
   port:     Integer,

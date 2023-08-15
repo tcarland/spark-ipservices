@@ -1,6 +1,5 @@
 package com.trace3.spark
 
-
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql._
 
